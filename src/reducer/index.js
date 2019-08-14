@@ -16,7 +16,32 @@ const initState = {
 };
 
 function reducer(state = initState, action) {
-  return state;
+  switch (action.type) {
+    case 'ADD_FEATURE':
+      const newFeature = state.store.find(feature => {
+        return feature.id === action.payload;
+      });
+      console.log('newFeature', newFeature)
+      console.log('id', action.payload)
+      if (state.car.features.some(feature => feature.id === action.payload)) {
+        return state;
+      } else {
+        const newCar = {
+          ...state.car,
+          price: state.car.price + newFeature.price,
+          features: [
+            ...state.car.features,
+            newFeature
+          ]
+        };
+        return {
+          ...state,
+          car: newCar
+        };
+      }
+    default:
+      return state;
+  }
 }
 
 export default reducer;
