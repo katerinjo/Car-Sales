@@ -39,6 +39,29 @@ function reducer(state = initState, action) {
           car: newCar
         };
       }
+    case 'REM_FEATURE':
+      const moribundIx = state.car.features.findIndex(feature => {
+        return feature.id === action.payload;
+      });
+      console.log('moribundIx', moribundIx)
+      console.log('features', state.car.features)
+      if (moribundIx === -1) {
+        return state;
+      }
+      const newPrice = state.car.price - state.car.features[moribundIx].price;
+      const newFeatures = [
+        ...state.car.features.slice(0, moribundIx),
+        ...state.car.features.slice(moribundIx + 1)
+      ];
+      const newCar = {
+        ...state.car,
+        price: newPrice,
+        features: newFeatures
+      };
+      return {
+        ...state,
+        car: newCar
+      };
     default:
       return state;
   }

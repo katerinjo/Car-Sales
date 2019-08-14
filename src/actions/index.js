@@ -4,3 +4,11 @@ export const addFeature = (id) => {
     payload: id
   };
 };
+
+export const remFeature = (id) => {
+  console.log('remfeature called', id)
+  return {
+    type: 'REM_FEATURE',
+    payload: id
+  };
+};
